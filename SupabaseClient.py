@@ -1,8 +1,11 @@
 from supabase import create_client, Client
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 # Replace these with your project details
-SUPABASE_URL = "https://your-supabase-project-url.supabase.co"
-SUPABASE_KEY = "your-supabase-api-key"
+SUPABASE_URL = os.getenv("API_URL")
+SUPABASE_KEY = os.getenv("API_KEY")
 
 def initialize_supabase():
     # Create a Supabase client

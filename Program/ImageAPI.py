@@ -4,11 +4,11 @@ import matplotlib.pyplot as plt
 from io import BytesIO
 
 '''
-FileName: 
+FileName: ImageAPI.py
 
-Devoloper: 
+Devoloper: Austin Zickur
 
-Description:
+Description: 
 
 Functions:
     * FITStoImages()
