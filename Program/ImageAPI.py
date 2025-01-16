@@ -13,7 +13,7 @@ Description:
 Functions:
     * FITStoImages()
         input: File (FITS)
-        output: Image ()
+        output: Image (LIST)
 
 '''
 
@@ -24,7 +24,7 @@ default = "j9am01010_drz.fits"
 
 def FITStoImages(file):
     #file = input()
-    print(file)
+    #print(file)
     with fits.open(file) as hdul:
         #header = hdul[0].header
         #data = hdul[2].data
@@ -69,7 +69,7 @@ def FITStoImages(file):
             plt.colorbar()
             plt.show()
             '''
-        print(dataList)
+        #print(dataList)
     return(dataList)
 
        
