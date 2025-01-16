@@ -1,6 +1,7 @@
 from astropy.io import fits
 import numpy as np
 import matplotlib.pyplot as plt
+from io import BytesIO
 
 '''
 FileName: 
@@ -20,6 +21,7 @@ Functions:
 
 default = "j9am01010_drz.fits"
 
+
 def FITStoImages(file):
     #file = input()
     print(file)
@@ -28,6 +30,7 @@ def FITStoImages(file):
         #data = hdul[2].data
         #title = hdul[2].name
 
+        '''
         for i, hdu in enumerate(hdul):
             #if type(hdu) == "ImageHDU":
             data = hdu.data
@@ -39,9 +42,26 @@ def FITStoImages(file):
             plt.show()
             #print(f"index here -->: {i}")
             #print(f"object here -->: {hdu}")
+        '''
+        dataList = []
+        for i, hdu in enumerate(hdul):
+            if isinstance(hdu, fits.ImageHDU):
+                data = hdu.data
+                title = hdu.name
 
-        for col in hdul.data.columns:
-            print(col)
+                dataList.append(data)
+
+                '''
+                plt.imshow(data)
+                plt.title(f"{title} Image")
+                #plt.colorbar()
+                #plt.show()
+
+                buffer = BytesIO()
+                plt.savefig(buffer, format="png")
+                buffer.seek(0)
+
+                plt.savefig(f"{title}.png")'''
 
             '''
             plt.imshow(data)
@@ -49,6 +69,9 @@ def FITStoImages(file):
             plt.colorbar()
             plt.show()
             '''
+        print(dataList)
+    return(dataList)
+
        
 
 
