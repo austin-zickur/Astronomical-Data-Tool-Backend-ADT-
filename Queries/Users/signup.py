@@ -16,14 +16,13 @@ Description: routes to handle user Authentification including
              signUp, signIn, SignOut, Delete User
 
 Routes:
-    * user/signUp/: POST
+    * /user/signUp/: POST
         request: 
             JSON
                 email (String)
                 password (String)
         send:
             message (String)
-            response (JSON)
 
 '''
 

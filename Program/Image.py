@@ -21,7 +21,7 @@ Functions:
 
 default = "j9am01010_drz.fits"
 
-
+# For generate images feature
 def FITStoImages(file):
     #file = input()
     #print(file)

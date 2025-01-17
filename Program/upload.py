@@ -1,24 +1,32 @@
-#from supabase import create_client, Client
-
-
-from astropy.io import fits
-from Program.Image import FITStoImages
+from flask import Flask, Blueprint, jsonify, request
+from uploadQuery import uploadFiles
 '''
-FileName: upload
+FileName: SignUp
 
-Devoloper: Austin Z
+Developer: Kylee B
 
-Description: 
+Description: routes to handle user Authentification including
+             signUp, signIn, SignOut, Delete User
 
-Functions:
-    * FITStoDatabase()
-        input: File (FITS)
-        output: Image ()
+Routes:
+    * /upload/files/: POST
+        request: 
+            file (File Object)
+        send:
+            message (String)
 
 '''
 
-def uploadFile(file):
-    dataList = FITStoImages(file)
-    print(f"List: {dataList}")
 
-uploadFile("j9am01010_drz.fits")
+# INIT /upload route
+upload_bp = Blueprint('upload', __name__)
+
+@upload_bp.route("/upload/files/<user>", methods=["POST"])
+def upload_files(user):
+    file = request.file
+    fileName = file.fileName
+
+    response = uploadFiles(user, file, fileName)
+
+
+    
