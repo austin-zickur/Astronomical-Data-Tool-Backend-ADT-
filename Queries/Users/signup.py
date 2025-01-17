@@ -1,39 +1,59 @@
-from supabase import initialize_supabase
+from flask import Flask, Blueprint, jsonify, request
+
+# import signup() from Queries/Users/signup.py
+from signupQuery import signUp
+
+# INIT /user route
+user_bp = Blueprint('user', __name__)
+
 
 '''
-FileName: signup
+FileName: SignUp
 
 Developer: Kylee B
 
-Description: functions to query supabase for user authentication
+Description: routes to handle user Authentification including
+             signUp, signIn, SignOut, Delete User
 
-Imported into: 
-    * SignUp.py
-
-Functions:
-    * signUp():
-        input:
-            email (String)
-            password (String)
-        output:
-            data (JSON)
+Routes:
+    * user/signUp/: POST
+        request: 
+            JSON
+                email (String)
+                password (String)
+        send:
+            message (String)
+            response (JSON)
 
 '''
 
-# initialize supabase for use
-supabase = initialize_supabase()
+@user_bp.route("/user/signUp/", methods=["POST"])
+def sign_up():
+    # request JSON data from user
+    data = request.get_json()
 
-def signUp(email, password):
-    try:
-        data = supabase.auth.sign_up({
-            'email': f'{email}',
-            'password': f'{password}',
-            'options': {
-                'email_redirect_to': 'https://example.com/welcome',
-                },
-        })
-        print(data)
-        return(data)
+    if data:
+
+        fullName = data.get("fullName")
+        email = data.get("email")
+        password = data.get("password")
+        # use signUp to return success
+        response = signUp(fullName, email, password)
+
+        print("user signed up successfully")
+        return jsonify({
+            "message":"User SignUp Successful"
+        }), 200
+    else:
+        return jsonify({"message":"Invalid Credentials"}), 401
+    '''   
     except Exception as e:
-        print(f"error connecting to DB -- {e}")
-        return(f"error connecting to DB -- {e}")
+        #print(f"Error signing up user {e}")
+        return jsonify({
+            "message":"Error signing up user",
+            "error": e
+            }), 401
+    '''
+@user_bp.route("/user/test/", methods=["GET"])
+def test():
+    return jsonify({"message":"this is a test"}), 200
