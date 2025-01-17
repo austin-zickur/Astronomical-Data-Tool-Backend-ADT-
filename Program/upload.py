@@ -2,7 +2,7 @@
 
 
 from astropy.io import fits
-from ImageAPI import FITStoImages
+from Program.Image import FITStoImages
 '''
 FileName: upload
 
