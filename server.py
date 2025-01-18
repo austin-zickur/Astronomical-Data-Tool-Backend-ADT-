@@ -1,5 +1,5 @@
 from flask import Flask
-from SignUp import user_bp
+from signup import user_bp
 
 
 # Initialize Flask app
