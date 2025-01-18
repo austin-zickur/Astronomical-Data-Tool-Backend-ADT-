@@ -2,16 +2,17 @@ from SupabaseClient import initialize_supabase
 from astropy.io import fits
 from Image import FITStoImages
 '''
-FileName: upload
+FileName: uploadQuery.py
 
-Devoloper: Austin Z
+Devoloper: Austin Zickur, Kylee Brown
 
-Description: 
+Description: queries used to upload data to the database
 
 Functions:
-    * FITStoDatabase()
+    * uploadFiles()
         input: File (FITS)
-        output: Image ()
+        output: Response
+    
 
 '''
 
@@ -21,12 +22,12 @@ supabase = initialize_supabase()
 def uploadFiles(user, file, fileName):
     # Upload the file directly to Supabase
     response = supabase.storage.from_("user_storage").upload(
-        f"uploads/{user}/files/{fileName}", file.read()
+        f"uploads/{user}/files/FITS/{fileName}", file.read()
     )
 
     return response
 
-
+# TEST 
 
 
 '''
