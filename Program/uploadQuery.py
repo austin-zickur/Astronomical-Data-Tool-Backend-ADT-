@@ -21,7 +21,7 @@ supabase = initialize_supabase()
 
 def uploadFiles(user, file, fileName):
     # Upload the file directly to Supabase
-    response = supabase.storage.from_("user_storage").upload(
+    response = supabase.storage.from_("user-storage").upload(
         f"uploads/{user}/files/FITS/{fileName}", file.read()
     )
 

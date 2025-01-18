@@ -1,15 +1,17 @@
 from flask import Flask
+# Routes:
 from signup import user_bp
+from upload import upload_bp
 
 
 # Initialize Flask app
 app = Flask(__name__)
 
 
-# Register blueprints
-#app.register_blueprint(user_bp, url_prefix='/adt-api')
+# Register blueprints (Routes)
 app.register_blueprint(user_bp)
-#app.register_blueprint(post_bp, url_prefix='/api')
+app.register_blueprint(upload_bp)
+
 
 # Run the app
 if __name__ == '__main__':

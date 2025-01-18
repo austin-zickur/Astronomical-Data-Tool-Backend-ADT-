@@ -19,7 +19,7 @@ Functions:
 
 # FITStoImages()
 
-default = "j9am01010_drz.fits"
+default = "Program/j9am01010_drz.fits"
 
 # For 'generate images' feature
 def FITStoImages(file):
@@ -57,4 +57,4 @@ def FITStoImages(file):
 
 
 
-FITStoImages(default)
+#FITStoImages(default)
