@@ -44,6 +44,8 @@ default = "j9am01010_drz.fits"
 def FITStoDescription(file):
     with fits.open(file) as hdul:
         header = hdul[0].header
+        tsc = header.get('TELESCOP')
+        
     return header
 
 FITStoDescription(default)

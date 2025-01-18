@@ -47,7 +47,7 @@ def FITStoImages(file):
                 #plt.savefig(buffer, format="png")
                 #buffer.seek(0)
 
-                plt.savefig(f"{title}.png")
+                #plt.savefig(f"{title}.png")
                 plt.show()
                 plt.close()
         #print(dataList)
