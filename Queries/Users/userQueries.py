@@ -13,6 +13,7 @@ Imported into:
 Functions:
     * signUp():
         input:
+            fullName (String)
             email (String)
             password (String)
         output:
@@ -47,3 +48,18 @@ def signUp(fullName, email, password):
         print(f"error connecting to DB -- {e}")
         return(f"error connecting to DB -- {e}")
     
+def signIn(email, password):
+    try:
+        data = supabase.auth.sign_in_with_password({
+        "email": f"{email}",
+        "password": f"{password}"
+        })
+        if data:
+            return data
+        else:
+            print("Error retrieving data")
+            return
+
+    except Exception as e:
+            print(f"error connecting to DB -- {e}")
+            return(f"error connecting to DB -- {e}")

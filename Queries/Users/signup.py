@@ -1,7 +1,7 @@
 from flask import Flask, Blueprint, jsonify, request
 
 # import signup() from Queries/Users/signup.py
-from signupQuery import signUp
+from userQueries import signUp, signIn
 
 # INIT /user route
 user_bp = Blueprint('user', __name__)
@@ -39,20 +39,36 @@ def sign_up():
         # use signUp to return success
         response = signUp(fullName, email, password)
 
-        print("user signed up successfully")
+        #print("user signed up successfully")
         return jsonify({
             "message":"User SignUp Successful"
         }), 200
     else:
         return jsonify({"message":"Invalid Credentials"}), 401
-    '''   
-    except Exception as e:
-        #print(f"Error signing up user {e}")
+
+@user_bp.route("/user/signIn/", methods=["POST"])
+def sign_in():
+
+    data = request.get_json()
+
+    if data:
+        email = data.get("email")
+        password = data.get("password")
+
+        response = signIn(email, password)
+
         return jsonify({
-            "message":"Error signing up user",
-            "error": e
-            }), 401
-    '''
+            "message":"User SignUp Successful"
+        }), 200
+    else:
+        return jsonify({"message":"Invalid Credentials"}), 401
+
+
+
+'''
+TEST ROUTE
 @user_bp.route("/user/test/", methods=["GET"])
 def test():
     return jsonify({"message":"this is a test"}), 200
+'''
+
