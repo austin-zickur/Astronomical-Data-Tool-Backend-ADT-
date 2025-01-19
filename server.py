@@ -1,9 +1,12 @@
+
 from flask import Flask
 # Routes: Queries/Users/signup.py
 import sys
-print("Python search paths:")
-for path in sys.path:
-    print(path)
+import os
+# Add the directory to the system path
+sys.path.append(os.path.abspath("./Queries/Users"))
+sys.path.append(os.path.abspath("./Program"))
+
 from signup import user_bp
 from upload import upload_bp
 
