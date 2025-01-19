@@ -26,7 +26,7 @@ Routes:
 
 '''
 
-@user_bp.route("/user/signUp/", methods=["POST"])
+@user_bp.route("/user/sign-up/", methods=["POST"])
 def sign_up():
     # request JSON data from user
     data = request.get_json()
@@ -58,7 +58,7 @@ def sign_in():
         response = signIn(email, password)
 
         return jsonify({
-            "message":"User SignUp Successful"
+            "message":"User SignIn Successful"
         }), 200
     else:
         return jsonify({"message":"Invalid Credentials"}), 401
