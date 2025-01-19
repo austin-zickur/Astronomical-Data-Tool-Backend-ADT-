@@ -22,12 +22,12 @@ Routes:
 # INIT /upload route
 upload_bp = Blueprint('upload', __name__)
 
-@upload_bp.route("/upload/files/<user>", methods=["POST"])
-def upload_files(user):
+@upload_bp.route("/upload/files/<userId>", methods=["POST"])
+def upload_files(userId):
     file = request.files['file']
     fileName = file.filename
 
-    response = uploadFiles(user, file, fileName)
+    response = uploadFiles(userId, file, fileName)
     
     if response:
         return jsonify({"message":"File Upload Successful"}), 200

@@ -12,6 +12,9 @@ Functions:
     * uploadFiles()
         input: File (FITS)
         output: Response
+    * getFiles()
+        input: Name (User)
+        output: List
     
 
 '''
@@ -19,16 +22,25 @@ Functions:
 #Init supabase
 supabase = initialize_supabase()
 
-def uploadFiles(user, file, fileName):
+# For uploading files
+
+def uploadFiles(userId, file, fileName):
     # Upload the file directly to Supabase
     response = supabase.storage.from_("user-storage").upload(
-        f"uploads/{user}/files/{fileName}", file.read()
+        f"uploads/{userId}/files/{fileName}", file.read()
     )
 
     return response
 
-# TEST 
+# For getting files
 
+def getFiles(user):
+    response = supabase.storage.from_("user-storage").list(f"uploads/{user}/files")
+    print(response)
+    return response
+# TEST 
+dummy_var = "Austin Zickur"
+getFiles(dummy_var)
 
 '''
 FIX ME -- for generate image feature
