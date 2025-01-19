@@ -13,8 +13,11 @@ Functions:
         input: File (FITS)
         output: Response
     * getFiles()
-        input: Name (User)
-        output: List
+        input: ID (User)
+        output: List (Dictionaries)
+    * nameGet()
+        input: ID (User)
+        output: List (file names)
     
 
 '''
@@ -38,15 +41,19 @@ def getFiles(user):
     response = supabase.storage.from_("user-storage").list(f"uploads/{user}/files")
     print(response)
     return response
-# TEST 
-dummy_var = "982hehg9oijw98sij"
-#getFiles(dummy_var)
+
+# For getting list of file names
+
 def nameGet(user):
     names = []
     for dict in getFiles(user):
         names.append(dict["name"])
     print(names)
     return names
+
+# TEST 
+dummy_var = "982hehg9oijw98sij"
+getFiles(dummy_var)
 nameGet(dummy_var)
 '''
 FIX ME -- for generate image feature
