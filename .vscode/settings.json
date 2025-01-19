@@ -1,11 +1,3 @@
 {
-
-    "python.analysis.extraPaths": [
-        "./Queries/Users",
-        "./Program"
-    ],
-
-    "terminal.integrated.env.windows": { 
-        "PYTHONPATH": "./Queries/Users;./Program" 
-    }
+    "python.envFile": "${workspaceFolder}/.env"
 }

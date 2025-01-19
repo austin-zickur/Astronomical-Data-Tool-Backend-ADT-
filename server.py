@@ -1,5 +1,9 @@
 from flask import Flask
-# Routes:
+# Routes: Queries/Users/signup.py
+import sys
+print("Python search paths:")
+for path in sys.path:
+    print(path)
 from signup import user_bp
 from upload import upload_bp
 
