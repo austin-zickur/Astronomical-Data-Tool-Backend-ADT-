@@ -39,9 +39,15 @@ def getFiles(user):
     print(response)
     return response
 # TEST 
-dummy_var = "Austin Zickur"
-getFiles(dummy_var)
-
+dummy_var = "982hehg9oijw98sij"
+#getFiles(dummy_var)
+def nameGet(user):
+    names = []
+    for dict in getFiles(user):
+        names.append(dict["name"])
+    print(names)
+    return names
+nameGet(dummy_var)
 '''
 FIX ME -- for generate image feature
 
