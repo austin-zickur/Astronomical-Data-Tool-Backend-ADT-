@@ -26,7 +26,7 @@ Routes:
 
 '''
 
-@user_bp.route("/user/sign-up/", methods=["POST"])
+@user_bp.route("/user/sign-up", methods=["POST"])
 def sign_up():
     # request JSON data from user
     data = request.get_json()
@@ -46,7 +46,7 @@ def sign_up():
     else:
         return jsonify({"message":"Invalid Credentials"}), 401
 
-@user_bp.route("/user/signIn/", methods=["POST"])
+@user_bp.route("/user/signIn", methods=["POST"])
 def sign_in():
 
     data = request.get_json()

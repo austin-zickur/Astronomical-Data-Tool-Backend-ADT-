@@ -1,5 +1,6 @@
 
 from flask import Flask
+from flask_cors import CORS
 # Routes: Queries/Users/signup.py
 import sys
 import os
@@ -13,6 +14,8 @@ from upload import upload_bp
 
 # Initialize Flask app
 app = Flask(__name__)
+#ORS(app)
+CORS(app, supports_credentials=True)
 
 
 # Register blueprints (Routes)
