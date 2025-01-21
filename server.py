@@ -8,7 +8,7 @@ import os
 sys.path.append(os.path.abspath("./Queries/Users"))
 sys.path.append(os.path.abspath("./Program"))
 
-from signup import user_bp
+from user import user_bp
 from upload import upload_bp
 
 
