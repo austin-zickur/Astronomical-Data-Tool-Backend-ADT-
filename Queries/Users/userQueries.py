@@ -63,3 +63,12 @@ def signIn(email, password):
     except Exception as e:
             print(f"error connecting to DB -- {e}")
             return(f"error connecting to DB -- {e}")
+    
+
+    #Austin's testing of getting user id
+def userId(user):
+    session = supabase.auth.get_user()
+    if session['user']:
+        print(f"User ID: {session['user']['id']}")
+    else:
+        print("No user logged in")

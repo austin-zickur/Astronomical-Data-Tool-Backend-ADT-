@@ -14,7 +14,7 @@ from upload import upload_bp
 
 # Initialize Flask app
 app = Flask(__name__)
-#ORS(app)
+# CORS(app)
 CORS(app, supports_credentials=True)
 
 
