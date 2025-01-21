@@ -1,7 +1,7 @@
 from flask import Flask, Blueprint, jsonify, request
 
 # import signup() from Queries/Users/signup.py
-from userQueries import signUp, signIn
+from userQueries import signUp, getEmails
 
 # INIT /user route
 user_bp = Blueprint('user', __name__)
@@ -38,7 +38,7 @@ def sign_up():
         password = data.get("password")
         # use signUp to return success
         response = signUp(fullName, email, password)
-
+        
         #print("user signed up successfully")
         return jsonify({
             "message":"User SignUp Successful"
@@ -46,24 +46,39 @@ def sign_up():
     else:
         return jsonify({"message":"Invalid Credentials"}), 401
 
-@user_bp.route("/user/signIn", methods=["POST"])
-def sign_in():
-
-    data = request.get_json()
-
-    if data:
-        email = data.get("email")
-        password = data.get("password")
-
-        response = signIn(email, password)
-
-        return jsonify({
-            "message":"User SignIn Successful"
-        }), 200
+@user_bp.route("/user/check-if-user-exists/<email>", methods=["GET"])
+def check_user(email):
+    userEmails = getEmails()
+    if userEmails:
+        if email in userEmails:
+            return jsonify({"message":"user already exists"}), 401
+        else:
+            return jsonify({"message":"user not in system, sign up successful"}), 200
     else:
-        return jsonify({"message":"Invalid Credentials"}), 401
+        return jsonify({"message":"Error fetching emails"}), 401
+'''
+@user_bp.route("/user/sign-in", methods=["POST"])
+def sign_in():
+    try:
+        data = request.get_json()
 
+        if data:
+            email = data.get("email")
+            password = data.get("password")
 
+            access_token = signIn(email, password)
+            
+            if access_token:
+                return jsonify({
+                    "message":"User SignIn Successful",
+                    "token":access_token
+                }), 200
+
+        else:
+            return jsonify({"message":"Invalid Credentials"}), 401
+    except Exception as e:
+        return jsonify({"message": "Error signing in", "error": str(e)}), 500
+'''
 
 '''
 TEST ROUTE

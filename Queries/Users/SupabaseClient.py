@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 # Replace these with your project details
 SUPABASE_URL = os.getenv("API_URL")
-SUPABASE_KEY = os.getenv("API_KEY")
+SUPABASE_KEY = os.getenv("SERVICE_KEY")
 
 def initialize_supabase():
     # Create a Supabase client
