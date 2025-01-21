@@ -52,6 +52,7 @@ def nameGet(user):
     return names
 
 # TEST 
+#
 if __name__ == "__main__":
     dummy_var = "982hehg9oijw98sij"
     getFiles(dummy_var)
