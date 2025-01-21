@@ -44,10 +44,13 @@ default = "j9am01010_drz.fits"
 def FITStoDescription(file):
     with fits.open(file) as hdul:
         header = hdul[0].header
-        tsc = header.get('TELESCOP')
+        tsc = header.get('TELESCOP') # For info on Telescope
+        ins = header.get('INSTRUME') # For info on Instrument
+        det = header.get('DETECTOR')
+        obj = header.get('TARGNAME')
+
+
         
-    return header
+    return tsc
 
 FITStoDescription(default)
-extract_proposal_id(default)
-fetch_proposal_details(default)

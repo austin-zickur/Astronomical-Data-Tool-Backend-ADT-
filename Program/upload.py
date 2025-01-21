@@ -1,5 +1,5 @@
 from flask import Flask, Blueprint, jsonify, request
-from uploadQuery import uploadFiles
+from uploadQuery import uploadFiles, getFiles
 '''
 FileName: SignUp
 
@@ -34,4 +34,14 @@ def upload_files(userId):
     else:
         return jsonify({"message": "Error uploading File"}), 401
 
+# For GETTING files
+
+@upload_bp.route("/files/<userId>", methods=["GET"])
+def upload_files(userId):
+
+    response = getFiles(userId)
     
+    if response:
+        return jsonify({"message":"File retrieval Successful"}), 200
+    else:
+        return jsonify({"message": "Error retrieving Files"}), 401
