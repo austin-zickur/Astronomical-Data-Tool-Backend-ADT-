@@ -43,7 +43,8 @@ def get_files(userId):
     response = getFiles(userId)
     
     if response:
-        return jsonify({"message":"File retrieval Successful"}), 200
+        return jsonify({"message":"File retrieval Successful",
+                        "response": response}), 200
     else:
         return jsonify({"message": "Error retrieving Files"}), 401
 
