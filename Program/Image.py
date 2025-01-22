@@ -26,7 +26,7 @@ default = "j9am01010_drz.fits"
 def FITStoImages(file):
     #file = input()
     #print(file)
-    with fits.open(file) as hdul:
+    with fits.open(file, mode="update") as hdul:
         header = hdul[0].header
         '''
         dataList = []

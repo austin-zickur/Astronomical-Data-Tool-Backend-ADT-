@@ -22,7 +22,7 @@ Functions:
 '''
 
 # initialize supabase for use
-supabase = initialize_supabase()
+#supabase = initialize_supabase()
 
 def signUp(fullName, email, password):
     try:
