@@ -2,6 +2,7 @@ from astropy.io import fits
 import numpy as np
 import matplotlib.pyplot as plt
 from io import BytesIO
+#from uploadQuery import uploadImages
 
 '''
 FileName: Image.py
@@ -19,7 +20,7 @@ Functions:
 
 # FITStoImages()
 
-default = "Program/j9am01010_drz.fits"
+default = "j9am01010_drz.fits"
 
 # For 'generate images' feature
 def FITStoImages(file):
@@ -35,6 +36,7 @@ def FITStoImages(file):
                 title = hdu.name
                 dataList.append(data)
         '''
+        dataList = []
         for i, hdu in enumerate(hdul):
             if isinstance(hdu, fits.ImageHDU):
                 data = hdul[i].data
@@ -43,18 +45,20 @@ def FITStoImages(file):
                 plt.title(f"{title} Image")
                 plt.colorbar()
 
-                #buffer = BytesIO()
-                #plt.savefig(buffer, format="png")
-                #buffer.seek(0)
-
+                buffer = BytesIO()
+                plt.savefig(buffer, format="png")
+                buffer.seek(0)
+                imgBytes = buffer.read()
+                dataList.append((title, imgBytes))
                 #plt.savefig(f"{title}.png")
-                plt.show()
-                plt.close()
+                #plt.show()
+                #plt.close()
         #print(dataList)
-    #return(dataList)
+    return(dataList)
 
        
 
-
-
+if __name__ == "__main__":
+    #data = FITStoImages(default)
+    userId = "fakeID000"
 #FITStoImages(default)

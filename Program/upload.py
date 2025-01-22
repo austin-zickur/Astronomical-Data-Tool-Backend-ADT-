@@ -1,5 +1,6 @@
 from flask import Flask, Blueprint, jsonify, request
-from uploadQuery import uploadFiles, getFiles
+from uploadQuery import uploadFiles, getFiles, uploadImages
+from Image import FITStoImages
 '''
 FileName: SignUp
 
@@ -37,9 +38,24 @@ def upload_files(userId):
 # For GETTING files
 
 @upload_bp.route("/files/<userId>", methods=["GET"])
-def upload_files(userId):
+def get_files(userId):
 
     response = getFiles(userId)
+    
+    if response:
+        return jsonify({"message":"File retrieval Successful"}), 200
+    else:
+        return jsonify({"message": "Error retrieving Files"}), 401
+
+#
+@upload_bp.route("/upload/images/<userId>", methods=["POST"])
+def upload_images(userId):
+    file = request.files['file']
+    fileName = file.filename
+
+    dataList = FITStoImages(file)
+    response = uploadImages(dataList, userId, fileName)
+    #response = getFiles(userId)
     
     if response:
         return jsonify({"message":"File retrieval Successful"}), 200
