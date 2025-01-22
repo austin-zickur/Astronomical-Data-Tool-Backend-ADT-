@@ -37,7 +37,7 @@ def upload_files(userId):
 # For GETTING files
 
 @upload_bp.route("/files/<userId>", methods=["GET"])
-def upload_files(userId):
+def get_files(userId):
 
     response = getFiles(userId)
     
