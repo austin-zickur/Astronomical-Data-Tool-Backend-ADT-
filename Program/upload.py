@@ -53,12 +53,11 @@ def get_files(userId):
 def upload_images(userId):
     file = request.files['file']
     fileName = file.filename
-
     dataList = FITStoImages(file)
     response = uploadImages(dataList, userId, fileName)
-    #response = getFiles(userId)
+    
     
     if response:
         return jsonify({"message":"File retrieval Successful"}), 200
     else:
-        return jsonify({"message": "Error retrieving Files"}), 401
+        return jsonify({"message": "Error retrieving Files"}), 404   

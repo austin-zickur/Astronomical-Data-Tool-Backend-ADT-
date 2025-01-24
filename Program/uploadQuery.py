@@ -41,9 +41,14 @@ def uploadImages(dataList, userId, fileName):
      responseList = []
      for title, buffer in dataList:
         response = supabase.storage.from_("user-storage").upload(
-            f"uploads/{userId}/images/{fileName}/{title}", buffer
+            f"uploads/{userId}/images/{fileName}/{title}.png", 
+            buffer,
+            {"Content-Type": "image/png"}
         )
+        
+
         responseList.append(response)
+     #print(responseList)
      return responseList
 # For getting files
 
@@ -61,19 +66,19 @@ def nameGet(user):
     print(names)
     return names
 
-name = "j9am01010_drz.fits"
+#name = "j9am01010_drz.fits"
 # TEST 
 if __name__ == "__main__":
-    data = FITStoImages(name)
-    userId = "fakeID000"
-    uploadImages(data, userId, name)
+    #data = FITStoImages(name)
+    #userId = "fakeID000"
+    #uploadImages(data, userId, name)
     #FITStoImages(default)
-'''
-FIX ME -- for generate image feature
+    '''
+    FIX ME -- for generate image feature
 
-def uploadFileImages(file):
-    dataList = FITStoImages(file)
-    print(f"List: {dataList}")
+    def uploadFileImages(file):
+        dataList = FITStoImages(file)
+        print(f"List: {dataList}")
 
-uploadFileImages("j9am01010_drz.fits")
-'''
+    uploadFileImages("j9am01010_drz.fits")
+    '''
