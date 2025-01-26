@@ -48,7 +48,7 @@ def uploadImages(dataList, userId, fileName):
         
 
         responseList.append(response)
-     #print(responseList)
+     print(responseList)
      return responseList
 # For getting files
 

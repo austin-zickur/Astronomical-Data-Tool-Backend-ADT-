@@ -58,6 +58,6 @@ def upload_images(userId):
     
     
     if response:
-        return jsonify({"message":"File retrieval Successful"}), 200
+        return jsonify({"message":"File retrieval Successful", "responses":response}), 200
     else:
         return jsonify({"message": "Error retrieving Files"}), 404   

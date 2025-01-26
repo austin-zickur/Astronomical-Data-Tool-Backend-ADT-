@@ -4,7 +4,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 from io import BytesIO
 matplotlib.use("Agg") # Macbook is weird :( -- needed because GUI was trying to render on Backend (not needed)
-#from uploadQuery import uploadImages
+# from uploadQuery import uploadImages
 
 '''
 FileName: Image.py
@@ -41,7 +41,7 @@ def FITStoImages(file):
         '''
         dataList = []
         for i, hdu in enumerate(hdul):
-            if isinstance(hdu, fits.ImageHDU):  #don't mess with .tab
+            if isinstance(hdu, fits.ImageHDU):  # don't mess with .tab
                 data = hdul[i].data
                 title = hdul[i].name
                 plt.imshow(data)
@@ -50,13 +50,17 @@ def FITStoImages(file):
 
                 buffer = BytesIO()
                 plt.savefig(buffer, format="png")
+                
                 buffer.seek(0)
 
                 imgBytes = buffer.read()
+                
+                #buffer.seek(0)
                 #print(f"Buffer content for {title[:10]}...: {buffer.read(10)}")  # Print the first 10 bytes
-                  # Reset again after reading
+                
                 plt.close()
                 dataList.append((title, imgBytes))
+                buffer.close()
                 #plt.savefig(f"{title}.png")
                 #plt.show()
                 #plt.close()
