@@ -1,6 +1,6 @@
 from SupabaseClient import initialize_supabase
 from astropy.io import fits
-from Image import FITStoImages
+from io import BytesIO
 '''
 FileName: uploadQuery.py
 
@@ -38,18 +38,20 @@ def uploadFiles(userId, file, fileName):
 # For accepting 
 
 def uploadImages(dataList, userId, fileName):
-     responseList = []
-     for title, buffer in dataList:
+    responseList = []
+    for title, buffer in dataList:
+    #title = "test_img"
+        print((buffer[:10]))
+        
         response = supabase.storage.from_("user-storage").upload(
-            f"uploads/{userId}/images/{fileName}/{title}.png", 
-            buffer,
-            {"Content-Type": "image/png"}
+            file= buffer,
+            path= f"uploads/{userId}/{fileName}/{title}.png", 
+            file_options = {"Content-Type": "image/png", "upsert": "true", "cacheControl":"3600"}
         )
         
-
         responseList.append(response)
-     print(responseList)
-     return responseList
+    print(responseList)
+    return responseList
 # For getting files
 
 def getFiles(user):
@@ -57,6 +59,14 @@ def getFiles(user):
     print(response)
     return response
 
+# For downloading files into database
+def getFileData(name, user):
+    
+    response = supabase.storage.from_("user-storage").download(f"uploads/{user}/files/{name}")
+    
+    #print(response)
+    return response
+    
 # For getting list of file names
 
 def nameGet(user):
@@ -69,8 +79,11 @@ def nameGet(user):
 #name = "j9am01010_drz.fits"
 # TEST 
 if __name__ == "__main__":
-    #data = FITStoImages(name)
-    #userId = "fakeID000"
+    #name = "j9am01010_drz.fits"
+    #data = "icons8-person-64.png"
+    #user = "AustinZickur"
+    #name = "iconTestFile"
+    #getFileData(name, user)
     #uploadImages(data, userId, name)
     #FITStoImages(default)
     '''

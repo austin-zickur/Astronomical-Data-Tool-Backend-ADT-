@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 from io import BytesIO
+from uploadQuery import uploadImages
 matplotlib.use("Agg") # Macbook is weird :( -- needed because GUI was trying to render on Backend (not needed)
 # from uploadQuery import uploadImages
 
@@ -25,12 +26,12 @@ Functions:
 #default = "j9am01010_drz.fits"
 
 # For 'generate images' feature
-def FITStoImages(file):
+def FITStoImages(file, userId, fileName):
     #file = input()
-    #print(file)
-    
+    #print("file:", file)
+    file = BytesIO(file)
     with fits.open(file, mode="update") as hdul:
-        header = hdul[0].header
+        hdul = hdul
         '''
         dataList = []
         for i, hdu in enumerate(hdul):
@@ -47,33 +48,29 @@ def FITStoImages(file):
                 plt.imshow(data)
                 plt.title(f"{title} Image")
                 plt.colorbar()
-
+                #plt.savefig(f"debug_{title}.png",format="png" )
                 buffer = BytesIO()
+                buffer.seek(0)
                 plt.savefig(buffer, format="png")
                 
-                buffer.seek(0)
-
-                imgBytes = buffer.read()
+                imgBytes = buffer.getvalue()
+                print(f"Image buffer length: {(imgBytes[:10])} bytes")
                 
                 #buffer.seek(0)
                 #print(f"Buffer content for {title[:10]}...: {buffer.read(10)}")  # Print the first 10 bytes
-                
-                plt.close()
+               
                 dataList.append((title, imgBytes))
-                buffer.close()
-                #plt.savefig(f"{title}.png")
-                #plt.show()
-                #plt.close()
-            else:
-                title = hdul[i].name
-                #print(title)
                 
+                buffer.close()
+                plt.close()
+
+    response = uploadImages(dataList, userId, fileName)  
     #print(dataList)
-    return(dataList)
+    return(response)
 
        
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
     #data = FITStoImages(default)
-    userId = "fakeID000"
+    #userId = "fakeID000"
     #FITStoImages(default)

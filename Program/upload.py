@@ -1,5 +1,5 @@
 from flask import Flask, Blueprint, jsonify, request
-from uploadQuery import uploadFiles, getFiles, uploadImages
+from uploadQuery import uploadFiles, getFiles, getFileData
 from Image import FITStoImages
 '''
 FileName: SignUp
@@ -41,23 +41,28 @@ def upload_files(userId):
 def get_files(userId):
 
     response = getFiles(userId)
-    
+
     if response:
+
         return jsonify({"message":"File retrieval Successful",
-                        "response": response}), 200
+                        "response": response,}), 200
     else:
         return jsonify({"message": "Error retrieving Files"}), 401
 
 #
 @upload_bp.route("/upload/images/<userId>", methods=["POST"])
 def upload_images(userId):
-    file = request.files['file']
-    fileName = file.filename
-    dataList = FITStoImages(file)
-    response = uploadImages(dataList, userId, fileName)
-    
-    
-    if response:
-        return jsonify({"message":"File retrieval Successful", "responses":response}), 200
-    else:
-        return jsonify({"message": "Error retrieving Files"}), 404   
+    try:
+        data = request.get_json()
+        fileName = data.get("name")
+        file = getFileData(fileName, userId)
+        #print(file)
+        response = FITStoImages(file, userId, fileName)
+        
+        
+        if response:
+            return jsonify({"message":"Image Generation successful", "response":response}), 200       
+        else:
+            return jsonify({"message": "Error generating images"}), 404   
+    except Exception as e:
+        return jsonify({"message":f"Images from {fileName} are already genrated"}), 409
