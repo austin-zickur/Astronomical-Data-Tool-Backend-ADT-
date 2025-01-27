@@ -40,18 +40,22 @@ def uploadFiles(userId, file, fileName):
 def uploadImages(dataList, userId, fileName):
     responseList = []
     for title, buffer in dataList:
-    #title = "test_img"
-        print((buffer[:10]))
-        
-        response = supabase.storage.from_("user-storage").upload(
-            file= buffer,
-            path= f"uploads/{userId}/{fileName}/{title}.png", 
-            file_options = {"Content-Type": "image/png", "upsert": "true", "cacheControl":"3600"}
-        )
+        path = f"uploads/{userId}/images/{fileName}/{title}.png"
+        #options = {"Content-Type": "image/png", "upsert": "true", "cacheControl":"3600"}
+        response = supabase.storage.from_("user-storage").upload(path, buffer,{"upsert":"true"})
         
         responseList.append(response)
-    print(responseList)
+    #print(responseList)
     return responseList
+
+def getPublicUrlsOfPlotImages(plot_Response):
+    paths = [response.path for response in plot_Response]
+    publicUrls = []
+    for path in paths:
+        file_url = supabase.storage.from_("user-storage").get_public_url(path)
+        publicUrls.append(file_url)
+    #print(paths)
+    return(publicUrls)
 # For getting files
 
 def getFiles(user):

@@ -1,5 +1,5 @@
 from flask import Flask, Blueprint, jsonify, request
-from uploadQuery import uploadFiles, getFiles, getFileData
+from uploadQuery import uploadFiles, getFiles, getFileData, getPublicUrlsOfPlotImages
 from Image import FITStoImages
 '''
 FileName: SignUp
@@ -58,10 +58,10 @@ def upload_images(userId):
         file = getFileData(fileName, userId)
         #print(file)
         response = FITStoImages(file, userId, fileName)
-        
-        
+        paths = getPublicUrlsOfPlotImages(response)
+        print(paths)
         if response:
-            return jsonify({"message":"Image Generation successful", "response":response}), 200       
+            return jsonify({"message":"Image Generation successful", "paths":paths}), 200       
         else:
             return jsonify({"message": "Error generating images"}), 404   
     except Exception as e:
