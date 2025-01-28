@@ -16,14 +16,22 @@ Description: routes to handle user Authentification including
              signUp, signIn, SignOut, Delete User
 
 Routes:
-    * /user/signUp/: POST
+    * /user/signUp: POST
         request: 
-            JSON
-                email (String)
-                password (String)
+        -JSON:
+            email (String)
+            password (String)
         send:
+        -JSON:
             message (String)
 
+    * //user/check-if-user-exists/<email>: GET
+        request:
+        -Params: 
+            email
+        send:
+        -JSON:
+            Message (String)
 '''
 
 @user_bp.route("/user/sign-up", methods=["POST"])

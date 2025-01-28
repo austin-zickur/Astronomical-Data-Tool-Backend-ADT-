@@ -45,9 +45,9 @@ def uploadImages(dataList, userId, fileName):
         response = supabase.storage.from_("user-storage").upload(path, buffer,{"upsert":"true"})
         
         responseList.append(response)
-    #print(responseList)
+    print(responseList)
     return responseList
-
+# GET public URLS of PLOT iamges to preview on frontend
 def getPublicUrlsOfPlotImages(plot_Response):
     paths = [response.path for response in plot_Response]
     publicUrls = []
@@ -56,11 +56,52 @@ def getPublicUrlsOfPlotImages(plot_Response):
         publicUrls.append(file_url)
     #print(paths)
     return(publicUrls)
-# For getting files
 
+# Get public URLS of ALL user images to store in "my images:" on the frontend
+def GetPublicUrlsOfImages(imageResponse):
+    paths = imageResponse
+    publicUrls = []
+    for path in paths:
+        file_url = supabase.storage.from_("user-storage").get_public_url(path)
+        publicUrls.append(file_url)
+    #print(publicUrls)
+    return(publicUrls)
+
+# GET ALL images a user has generated
+def getPlotImages(userId):
+    folders = supabase.storage.from_("user-storage").list(f"uploads/{userId}/images")
+    foldersList =[]
+    #print(folders)
+    imageResponseList = []
+    pathResposne = []
+    folderNames = []
+    imageNames = []
+    # iterate through ALL user folders and grab the group of images per folder
+    for folder in folders:
+        folderName = folder['name']
+        #print(folder['name'])
+        imageResponse = supabase.storage.from_("user-storage").list(f"uploads/{userId}/images/{folderName}")
+        imageResponseList.append(imageResponse)
+        foldersList.append(folder)
+    print(len(imageResponseList))
+        
+    # iterate through imageResponse and folders to grab ALL pictures with corresponding image names and file names
+    for imageGroup, folder in zip(imageResponseList, folders):
+        for image in imageGroup:
+            if image is not None:
+                folderNames.append(folder['name'])
+                imageNames.append(image['name'])
+
+                path =f"uploads/{userId}/images/{folder['name']}/{image['name']}"
+                pathResposne.append(path)
+
+    return pathResposne, folderNames, imageNames
+
+# For getting files
 def getFiles(user):
     response = supabase.storage.from_("user-storage").list(f"uploads/{user}/files")
     print(response)
+    
     return response
 
 # For downloading files into database
@@ -90,6 +131,10 @@ if __name__ == "__main__":
     #getFileData(name, user)
     #uploadImages(data, userId, name)
     #FITStoImages(default)
+    user = "fc1031d0-80c4-4b30-94c5-bb49c41ff2d2"
+    respo, foldN, imgN = getPlotImages(user)
+    print( foldN, imgN)
+    #GetPublicUrlsOfImages(respo)
     '''
     FIX ME -- for generate image feature
 
