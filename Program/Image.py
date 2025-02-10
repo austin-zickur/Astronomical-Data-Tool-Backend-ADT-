@@ -16,8 +16,13 @@ Description: saves all images in FITS file
 
 Functions:
     * FITStoImages()
-        input: File (FITS)
-        output: Image (LIST)
+        input: 
+            params:
+                file (FITS)
+                userId (String)
+                fileName (String)
+        output: 
+            response (path urls of images that were uploaded)
 
 '''
 
@@ -42,22 +47,12 @@ def FITStoImages(file, userId, fileName):
                 dataList.append(data)
         '''
         dataList = []
-            
-        #print(hdul)
         for i, hdu in enumerate(hdul):
-            if isinstance(hdu, fits.TableHDU):
-                #print(hdu.data)
-                data = hdu.data
-                title = f"tab_image_{i}"
-                print("yes")
-                dataList.append(title, data)
             if isinstance(hdu, (fits.ImageHDU, fits.PrimaryHDU)):
-                # don't mess with .tab -- for now
-                #print(hdu)
+                print(hdu.data)
                 #print(hdul[i].data) 
                 data = hdul[i].data
                 if data is not None:
-                    
                     title = hdul[i].name
                     plt.imshow(data)
                     plt.title(f"{title} Image")
@@ -78,13 +73,14 @@ def FITStoImages(file, userId, fileName):
                     buffer.close()
                     plt.close()
                     #print("hi")
+        print("datalist:")
         print(dataList)
         response = uploadImages(dataList, userId, fileName)  
     #print(dataList)
     return(response)
 
        
-
+# DEBUG BELOW:
 #if __name__ == "__main__":
     #data = FITStoImages(default)
     #userId = "fakeID000"

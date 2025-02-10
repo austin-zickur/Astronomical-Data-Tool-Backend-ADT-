@@ -2,23 +2,47 @@ from flask import Flask, Blueprint, jsonify, request
 from uploadQuery import uploadFiles, getFiles, getFileData, getPublicUrlsOfPlotImages, getPlotImages, GetPublicUrlsOfImages
 from Image import FITStoImages
 '''
-FileName: SignUp
+FileName: upload.py
 
 Developer: Kylee B
 
-Description: routes to handle user Authentification including
-             signUp, signIn, SignOut, Delete User
+Description: routes to handle uploads to any specific user using userId as the unique identifier
 
 Routes:
-    * /upload/files/: POST
+    * /upload/files/<userId>: POST
         request: 
         -JSON:
             file (File Object)
         -params:
-            user (String)
+            userId
         send:
         -JSON:
             message (String)
+    * /files/<userId>: GET
+        -params:
+            userId
+        send:
+        -JSON:
+            message (String)
+            response (Array)
+    * /upload/images/<userId>: POST
+        request:
+            fileName (JSON)
+        -params:
+            userId
+        send:
+        -JSON:
+            message (String)
+            paths (Array)
+    * /images/<userId>: GET
+        -params:
+            userId
+        send:
+            -JSON:
+                message (String)
+                paths (Array)
+                filderNames (Array)
+                imageNames (Array)
 
 '''
 
@@ -68,7 +92,7 @@ def upload_images(userId):
         else:
             return jsonify({"message": "Error generating images"}), 404   
     except Exception as e:
-        return jsonify({"message":f"Images from {fileName} are already genrated"}), 409
+        return jsonify({"message":f"There are No Images in {fileName}"}), 409
     
 # GET ALL user images
 @upload_bp.route("/images/<userId>", methods=["GET"])

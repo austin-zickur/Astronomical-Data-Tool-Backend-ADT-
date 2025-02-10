@@ -6,27 +6,65 @@ FileName: uploadQuery.py
 
 Devoloper: Austin Zickur, Kylee Brown
 
-Description: queries used to upload data to the database
+Description: queries used to upload and get data to and from the database
 
 Functions:
     * uploadFiles()
-        input: File (FITS)
-        output: Response
-    * getFiles()
-        input: ID (User)
-        output: List (Dictionaries)
-    * nameGet()
-        input: ID (User)
-        output: List (file names)
-    
+        input:
+            params: 
+                userId (String)
+                file (FITS)
+                fileName (String)
+        output: 
+            response (From databsae)
+    * uploadImages()
+        input:
+            params:
+                dataList (Array)
+                userId (String)
+                fileName (String)
+        output:
+            ResponseList (Array)
+    * getPublicUrlsOfPlotImages() -- for preview right after upload
+        input:
+            params:
+                plot_Response (Array)
+        output:
+            publicUrls (Array)
 
+    * GetPublicUrlsOfImages() -- for thumbnail and individual photo
+        input:
+            params:
+                imageResponse (Array) -- (an array of all image paths per one user)
+        ouput:
+            publicUrls (Array)
+    * getPlotImages()
+        input:
+            params:
+                userId (String)
+        output:
+            pathResponse (Array)
+            folderNames (Array)
+            imageNames (Array)
+    * getFiles()
+        input: 
+            params:
+                user (String)
+        ouput:
+            response (From database)
+    * getFileData()
+        input:
+            params:
+                name (String)
+                user (String)
+        output:
+            response (From database)
 '''
 
 #Init supabase
 supabase = initialize_supabase()
 
-# For uploading files
-
+# For uploading files (based on unique userId)
 def uploadFiles(userId, file, fileName):
     # Upload the file directly to Supabase
     response = supabase.storage.from_("user-storage").upload(
@@ -35,8 +73,7 @@ def uploadFiles(userId, file, fileName):
 
     return response
 
-# For accepting 
-
+# For uploading images (based on uniques userId) 
 def uploadImages(dataList, userId, fileName):
     responseList = []
     for title, buffer in dataList:
@@ -47,7 +84,8 @@ def uploadImages(dataList, userId, fileName):
         responseList.append(response)
     print(responseList)
     return responseList
-# GET public URLS of PLOT iamges to preview on frontend
+
+# GET public URLS of PLOT images to preview on frontend
 def getPublicUrlsOfPlotImages(plot_Response):
     paths = [response.path for response in plot_Response]
     publicUrls = []
@@ -83,7 +121,7 @@ def getPlotImages(userId):
         imageResponse = supabase.storage.from_("user-storage").list(f"uploads/{userId}/images/{folderName}")
         imageResponseList.append(imageResponse)
         foldersList.append(folder)
-    print(len(imageResponseList))
+    #print(len(imageResponseList))
         
     # iterate through imageResponse and folders to grab ALL pictures with corresponding image names and file names
     for imageGroup, folder in zip(imageResponseList, folders):
@@ -97,7 +135,7 @@ def getPlotImages(userId):
 
     return pathResposne, folderNames, imageNames
 
-# For getting files
+# For getting files based on userId
 def getFiles(user):
     response = supabase.storage.from_("user-storage").list(f"uploads/{user}/files")
     print(response)
@@ -112,17 +150,20 @@ def getFileData(name, user):
     #print(response)
     return response
     
-# For getting list of file names
-
+# UNUSED -- For getting list of file names -- UNUSED
+'''
 def nameGet(user):
     names = []
     for dict in getFiles(user):
         names.append(dict["name"])
     print(names)
     return names
+'''
 
+
+# DEBUG BELOW 
 #name = "j9am01010_drz.fits"
-# TEST 
+
 if __name__ == "__main__":
     #name = "j9am01010_drz.fits"
     #data = "icons8-person-64.png"

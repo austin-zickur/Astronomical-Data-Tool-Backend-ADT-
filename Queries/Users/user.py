@@ -25,7 +25,7 @@ Routes:
         -JSON:
             message (String)
 
-    * //user/check-if-user-exists/<email>: GET
+    * /user/check-if-user-exists/<email>: GET
         request:
         -Params: 
             email
@@ -34,6 +34,7 @@ Routes:
             Message (String)
 '''
 
+# SIGN UP user to Astronomival Data Plotter
 @user_bp.route("/user/sign-up", methods=["POST"])
 def sign_up():
     # request JSON data from user
@@ -53,7 +54,8 @@ def sign_up():
         }), 200
     else:
         return jsonify({"message":"Invalid Credentials"}), 401
-
+    
+# Check if user already exists 
 @user_bp.route("/user/check-if-user-exists/<email>", methods=["GET"])
 def check_user(email):
     userEmails = getEmails()
@@ -64,7 +66,10 @@ def check_user(email):
             return jsonify({"message":"user not in system, sign up successful"}), 200
     else:
         return jsonify({"message":"Error fetching emails"}), 401
+    
+
 '''
+-- UNUSED --  -- UNUSED --  -- UNUSED --  -- UNUSED -- 
 @user_bp.route("/user/sign-in", methods=["POST"])
 def sign_in():
     try:
@@ -88,6 +93,7 @@ def sign_in():
         return jsonify({"message": "Error signing in", "error": str(e)}), 500
 '''
 
+#DEBUG BELOW:
 '''
 TEST ROUTE
 @user_bp.route("/user/test/", methods=["GET"])

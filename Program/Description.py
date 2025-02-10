@@ -3,6 +3,7 @@ import numpy as np
 import requests
 
 '''
+---  PROTOTYPE -- NOT FOR PRODUCTION!  ----
 *uses MAST database and API
 
 FileName: Description.py

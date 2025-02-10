@@ -22,7 +22,7 @@ Functions:
 '''
 
 # initialize supabase for use
-#supabase = initialize_supabase()
+supabase = initialize_supabase()
 
 def signUp(fullName, email, password):
     try:
@@ -48,7 +48,7 @@ def signUp(fullName, email, password):
         print(f"error connecting to DB -- {e}")
         return(f"error connecting to DB -- {e}")
     
-    
+ 
 def signIn(email, password):
     try:
         data = supabase.auth.sign_in_with_password({
@@ -76,13 +76,19 @@ def getEmails():
     return emails
     #print(data[0].user_metadata['email']) 
 
-    #Austin's testing of getting user id
+
+''' 
+#Austin's testing of getting user id
 def userId(user):
     session = supabase.auth.get_user()
     if session['user']:
         print(f"User ID: {session['user']['id']}")
     else:
         print("No user logged in")
+''' 
 
+#DEBUG BELOW:
+'''
 if __name__ == "__main__":
     getEmails()
+'''
