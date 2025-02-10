@@ -1,5 +1,5 @@
 from flask import Flask, Blueprint, jsonify, request
-from uploadQuery import uploadFiles, getFiles, getFileData, getPublicUrlsOfPlotImages, getPlotImages, GetPublicUrlsOfImages
+from uploadQuery import uploadFiles, getFiles, getFileData, getPublicUrlsOfPlotImages, getPlotImages, GetPublicUrlsOfImages, deleteFile
 from Image import FITStoImages
 '''
 FileName: upload.py
@@ -49,6 +49,8 @@ Routes:
 
 # INIT /upload route
 upload_bp = Blueprint('upload', __name__)
+
+ # -- UPLOAD LOGIC --
 
 # UPLOAD the FITS file
 @upload_bp.route("/upload/files/<userId>", methods=["POST"])
@@ -108,3 +110,16 @@ def get_images(userId):
             return jsonify({"message": "Error generating public URLs"}), 404
     except Exception as e:
         return jsonify({"message":f"error retrieving images"}), 409
+    
+# -- DELETE LOGIC --
+    
+# delete a file from users "files" folder
+@upload_bp.route("/delete/<fileName>/<userId>", methods="DELETE")
+def delete_file(fileName, userId):
+    response = deleteFile(fileName, userId)
+
+    if response:
+        return jsonify({"message":"File removal Successful",
+                        "response": response}), 200
+    else:
+        return jsonify({"message": "Error removing File"}), 401

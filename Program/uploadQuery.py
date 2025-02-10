@@ -149,6 +149,12 @@ def getFileData(name, user):
     
     #print(response)
     return response
+# for deleting a file from the database
+def deleteFile(fileName, userId):
+    path = f'uploads/{userId}/files/{fileName}'
+    response = supabase.storage.from_('user-storage').remove([path])
+    return response
+
     
 # UNUSED -- For getting list of file names -- UNUSED
 '''
@@ -159,11 +165,11 @@ def nameGet(user):
     print(names)
     return names
 '''
+# END UNUSED -- For getting list of file names -- UNUSED END
 
-
-# DEBUG BELOW 
+# DEBUG BELOW:
 #name = "j9am01010_drz.fits"
-
+'''
 if __name__ == "__main__":
     #name = "j9am01010_drz.fits"
     #data = "icons8-person-64.png"
@@ -172,16 +178,8 @@ if __name__ == "__main__":
     #getFileData(name, user)
     #uploadImages(data, userId, name)
     #FITStoImages(default)
-    user = "fc1031d0-80c4-4b30-94c5-bb49c41ff2d2"
-    respo, foldN, imgN = getPlotImages(user)
-    print( foldN, imgN)
+    #user = "fc1031d0-80c4-4b30-94c5-bb49c41ff2d2"
+    #respo, foldN, imgN = getPlotImages(user)
+    #print( foldN, imgN)
     #GetPublicUrlsOfImages(respo)
-    '''
-    FIX ME -- for generate image feature
-
-    def uploadFileImages(file):
-        dataList = FITStoImages(file)
-        print(f"List: {dataList}")
-
-    uploadFileImages("j9am01010_drz.fits")
-    '''
+'''

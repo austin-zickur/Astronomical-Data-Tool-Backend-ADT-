@@ -48,7 +48,7 @@ def signUp(fullName, email, password):
         print(f"error connecting to DB -- {e}")
         return(f"error connecting to DB -- {e}")
     
- 
+'''
 def signIn(email, password):
     try:
         data = supabase.auth.sign_in_with_password({
@@ -64,7 +64,8 @@ def signIn(email, password):
     except Exception as e:
             print(f"error connecting to DB -- {e}")
             return(f"error connecting to DB -- {e}")
-    
+''' 
+
 def getEmails():
     data = supabase.auth.admin.list_users()
     emails = []
