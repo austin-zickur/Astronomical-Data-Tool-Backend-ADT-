@@ -67,11 +67,11 @@ Functions:
         output:
             response (From databse)
     * deleteImage()
-    input:
-        params:
-            ImagePath (String)
-    output:
-        response (From databse)
+        input:
+            params:
+                ImagePath (String)
+        output:
+            response (From databse)
 '''
 
 #Init supabase
@@ -188,6 +188,7 @@ def nameGet(user):
 # END UNUSED -- For getting list of file names -- UNUSED END
 
 # DEBUG BELOW:
+
 #name = "j9am01010_drz.fits"
 '''
 if __name__ == "__main__":
