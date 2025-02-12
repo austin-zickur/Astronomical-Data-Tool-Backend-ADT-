@@ -59,6 +59,19 @@ Functions:
                 user (String)
         output:
             response (From database)
+    * deleteFile()
+        input:
+            params:
+                fileName (String)
+                userId (String)
+        output:
+            response (From databse)
+    * deleteImage()
+    input:
+        params:
+            ImagePath (String)
+    output:
+        response (From databse)
 '''
 
 #Init supabase
@@ -149,10 +162,17 @@ def getFileData(name, user):
     
     #print(response)
     return response
+
 # for deleting a file from the database
 def deleteFile(fileName, userId):
     path = f'uploads/{userId}/files/{fileName}'
     response = supabase.storage.from_('user-storage').remove([path])
+    return response
+
+# for deleting a image from the database
+def deleteImage(imagePath):
+    response = supabase.storage.from_('user-storage').remove([imagePath])
+    print(imagePath)
     return response
 
     

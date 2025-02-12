@@ -1,5 +1,5 @@
 from flask import Flask, Blueprint, jsonify, request
-from uploadQuery import uploadFiles, getFiles, getFileData, getPublicUrlsOfPlotImages, getPlotImages, GetPublicUrlsOfImages, deleteFile
+from uploadQuery import uploadFiles, getFiles, getFileData, getPublicUrlsOfPlotImages, getPlotImages, GetPublicUrlsOfImages, deleteFile, deleteImage
 from Image import FITStoImages
 '''
 FileName: upload.py
@@ -36,13 +36,27 @@ Routes:
             paths (Array)
     * /images/<userId>: GET
         -params:
-            userId
+            userId 
         send:
             -JSON:
                 message (String)
                 paths (Array)
                 filderNames (Array)
                 imageNames (Array)
+    * /delete/<fileName>/<userId>: DELETE
+        -params:
+            fileName
+            userId
+        send:
+            -JSON
+                message (String)
+                response (Array)
+    */delete/image: POST
+        request:
+            imagePath
+        send:
+            message(String)
+            response(Array)
 
 '''
 
@@ -114,10 +128,23 @@ def get_images(userId):
 # -- DELETE LOGIC --
     
 # delete a file from users "files" folder
-@upload_bp.route("/delete/<fileName>/<userId>", methods="DELETE")
+@upload_bp.route("/delete/<fileName>/<userId>", methods=["DELETE"])
 def delete_file(fileName, userId):
     response = deleteFile(fileName, userId)
 
+    if response:
+        return jsonify({"message":"File removal Successful",
+                        "response": response}), 200
+    else:
+        return jsonify({"message": "Error removing File"}), 401
+
+# delete a image from users "images" folder
+@upload_bp.route("/delete/image", methods=["DELETE", "POST"])
+def delete_image():
+    data = request.get_json()
+    imagePath = data.get("imagePath")
+    response = deleteImage(imagePath)
+    
     if response:
         return jsonify({"message":"File removal Successful",
                         "response": response}), 200
