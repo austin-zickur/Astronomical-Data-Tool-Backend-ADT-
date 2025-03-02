@@ -24,7 +24,7 @@ app.register_blueprint(user_bp)
 app.register_blueprint(upload_bp)
 
 heroku_port = os.environ.get('PORT')
-test_port = os.getenv("TEST_PORT")
+test_port = os.getenv("TEST_PORT") # -- test
 # Run the app
 if __name__ == '__main__':
     app.run(port=heroku_port, debug=True)
