@@ -1,7 +1,7 @@
 from flask import Flask, Blueprint, jsonify, request
 
 # import signup() from Queries/Users/signup.py
-from userQueries import signUp, getEmails
+from userQueries import signUp, getEmails, deleteUserAccount, getPatchNotes
 
 # INIT /user route
 user_bp = Blueprint('user', __name__)
@@ -67,6 +67,25 @@ def check_user(email):
     else:
         return jsonify({"message":"Error fetching emails"}), 401
     
+# Delete user account
+@user_bp.route("/user/delete-user/<userId>", methods=["DELETE"])
+def delete_user(userId):
+
+    deleteUser = deleteUserAccount(userId)
+    if deleteUser:
+        return jsonify({"message":"user no longer in system, Account Deletion successful"}), 200
+    else:
+        return jsonify({"message":"Error deleting user"}), 401
+
+# FOR PATCH NOTES
+@user_bp.route("/get-patch-notes", methods=["GET"])
+def get_patch_notes():
+
+        response = getPatchNotes()
+        if response:
+            return response.data, 200  # Return the patch notes as a list of dictionaries
+        else:
+            return jsonify({"error": f"{response.status_code} - {response.error_message}"}), 404
 
 '''
 -- UNUSED --  -- UNUSED --  -- UNUSED --  -- UNUSED -- 

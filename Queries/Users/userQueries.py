@@ -1,4 +1,4 @@
-from SupabaseClient import initialize_supabase
+from SupabaseClient import initialize_supabase, initialize_supabase_admin
 
 '''
 FileName: signup
@@ -55,7 +55,8 @@ def signUp(fullName, email, password):
     
 # for checking if a userExists
 def getEmails():
-    data = supabase.auth.admin.list_users()
+    supabase_admin = initialize_supabase_admin()
+    data = supabase_admin.auth.admin.list_users()
     emails = []
     for user in data:
         email = user.user_metadata['email']
@@ -65,6 +66,16 @@ def getEmails():
     return emails
     #print(data[0].user_metadata['email']) 
 
+# delete user account
+def deleteUserAccount(userId):
+    supabase_admin = initialize_supabase_admin()
+    response = supabase_admin.auth.admin.delete_user(userId)
+    print(response)
+    return response
+
+def getPatchNotes():
+      response = supabase.table('patch_notes').select('*').order('created_at', desc=False).execute()
+      return response
 ''' -- UNUSED --
 def signIn(email, password):
     try:
