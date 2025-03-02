@@ -74,7 +74,7 @@ def deleteUserAccount(userId):
     return response
 
 def getPatchNotes():
-      response = supabase.table('patch_notes').select('*').order('created_at', desc=False).execute()
+      response = supabase.table('patch_notes').select('*').order('created_at', desc=True).execute()
       return response
 ''' -- UNUSED --
 def signIn(email, password):

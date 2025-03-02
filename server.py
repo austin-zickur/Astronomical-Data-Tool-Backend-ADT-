@@ -10,6 +10,7 @@ sys.path.append(os.path.abspath("./Program"))
 
 from user import user_bp
 from upload import upload_bp
+import os
 
 
 # Initialize Flask app
@@ -22,7 +23,8 @@ CORS(app, supports_credentials=True)
 app.register_blueprint(user_bp)
 app.register_blueprint(upload_bp)
 
-
+heroku_port = os.environ.get('PORT')
+test_port = os.getenv("TEST_PORT")
 # Run the app
 if __name__ == '__main__':
-    app.run(port=8000, debug=True)
+    app.run(port=heroku_port, debug=True)
