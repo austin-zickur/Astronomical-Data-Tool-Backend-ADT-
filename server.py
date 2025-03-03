@@ -27,4 +27,4 @@ heroku_port = os.environ.get('PORT')
 test_port = os.getenv("TEST_PORT") # -- test
 # Run the app
 if __name__ == '__main__':
-    app.run(port=heroku_port, debug=True)
+    app.run(host="0.0.0.0", port=heroku_port, debug=True)
