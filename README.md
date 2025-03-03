@@ -7,8 +7,8 @@
 
 * ## Data Imaging
   * astropy
-  * Numpy
-  * Matplotlib
+  * numpy
+  * matplotlib
 * ## User Auth and Database Querying
   * flask
   * CORS
@@ -52,7 +52,7 @@ For authorization, since this is our first full stack project, we opted to go wi
 
 All secure variables were put in a `.env` folder to ensure security.
 
-Lastly, CORS was utilized to allow communication to any API's used by my program.
+Lastly, `CORS` was utilized to allow communication to any API's used by my program.
 
 ### Astronomy and FITS file manipulation
 
