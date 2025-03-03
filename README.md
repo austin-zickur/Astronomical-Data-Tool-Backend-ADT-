@@ -56,9 +56,11 @@ Lastly, `CORS` was utilized to allow communication to any API's used by my progr
 
 ### Astronomy and FITS file manipulation
 
-The FITS module in astropy was primarily used for capturing, indexing, and opening the Flexible Image Transport System (.fits) files as well as the data categorized in them. FITS files are particular to astronomical telescope missions and have bountiful access to information under HDUs (Header Data Units). After retrieving the image data usually found under "ImageHDU," matplotlib's pyplot module can directly use that binary data of the telescope instrumentation and plot the image pixel-to-pixel. 
+The `FITS` module in `astropy` was primarily used for capturing, indexing, and opening the Flexible Image Transport System (.fits) files as well as the data categorized in them. FITS files are particular to astronomical telescope missions and have bountiful access to information under HDUs (Header Data Units). After retrieving the image data usually found under "ImageHDU," `matplotlib`'s `pyplot` module can directly use that binary data of the telescope instrumentation and plot the image pixel-to-pixel. 
 
 The usual means of photon data capture is through a CCD (Charge-Coupled Device) camera with telescope instrumentation capable of measuring intensity, wavelength, polarization, and of course position of that light on the camera. The resultant data can be used to detect extremely precise "wobbles," redshifts, temperatures, spectrums, and images. For further science, research astrometry, spectral analysis, and planetary detection.
+
+The `BytesIO` was used to convert the file and image data to bytes objects to be easily transferrable to the database, or storage, using Supabase's API. This was a problem that arose during testing when image data-to-plot conversion was successful but the transfer failed.
 
 
 
