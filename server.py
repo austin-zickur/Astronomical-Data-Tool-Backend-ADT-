@@ -23,6 +23,10 @@ CORS(app, supports_credentials=True)
 app.register_blueprint(user_bp)
 app.register_blueprint(upload_bp)
 
+@app.route("/")
+def home():
+    return "Hello, world!"
+
 heroku_port = os.environ.get('PORT')
 test_port = os.getenv("TEST_PORT") # -- test
 # Run the app
